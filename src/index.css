@@ -1,0 +1,128 @@
+:root {
+  /* Color Palette */
+  --color-ivory: #F6F3EC;
+  --color-forest: #254B3B;
+  --color-forest-hover: #1b372b;
+  --color-forest-subtle: #EBF2EB;
+  --color-charcoal: #252822;
+  --color-charcoal-muted: #5E6359;
+  --color-charcoal-light: #80867B;
+  --color-sage: #E5EBE1;
+  --color-sage-border: #D3DDD0;
+  --color-gold: #C6A56B;
+  --color-gold-subtle: #FAF5EB;
+  --color-card-bg: #FFFFFF;
+  --color-card-hover: #FCFBF7;
+  --color-error: #A83232;
+  --color-error-bg: #FDF3F3;
+  --color-error-border: #F0C4C4;
+
+  /* Typography */
+  --font-serif: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 3px rgba(37, 40, 34, 0.05);
+  --shadow-card: 0 2px 8px -2px rgba(37, 40, 34, 0.06), 0 1px 3px rgba(37, 40, 34, 0.04);
+  --shadow-card-hover: 0 8px 20px -4px rgba(37, 40, 34, 0.08), 0 2px 6px rgba(37, 40, 34, 0.04);
+  --shadow-modal: 0 20px 40px -8px rgba(37, 40, 34, 0.25);
+
+  /* Layout */
+  --max-width: 1120px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-charcoal);
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.25;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-sans);
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+input, select, textarea {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-charcoal);
+}
+
+/* Focus styles for accessible navigation */
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
