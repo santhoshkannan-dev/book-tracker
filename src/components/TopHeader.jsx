@@ -9,6 +9,7 @@ export default function TopHeader({
   onStatusFilterChange,
   stats,
   totalBooksCount,
+  onGoToLanding,
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -52,7 +53,13 @@ export default function TopHeader({
     <header className="top-header">
       <div className="header-inner">
         {/* Brand / Logo */}
-        <div className="header-brand">
+        <button
+          type="button"
+          className="header-brand-btn"
+          onClick={onGoToLanding}
+          title="Return to Chapter Landing Page"
+          aria-label="Return to Chapter Landing Page"
+        >
           <div className="header-logo-badge" aria-hidden="true">
             <svg
               className="header-logo-icon"
@@ -69,7 +76,7 @@ export default function TopHeader({
             </svg>
           </div>
           <span className="header-brand-title">Chapter</span>
-        </div>
+        </button>
 
         {/* Center: Long Pill-shaped Search & Filter */}
         <div className="header-search-group">
@@ -179,6 +186,19 @@ export default function TopHeader({
 
         {/* Right: Notifications Button & Popover */}
         <div className="header-actions" ref={notifRef}>
+          <button
+            type="button"
+            className="header-landing-btn"
+            onClick={onGoToLanding}
+            title="Return to Chapter Landing Page"
+            aria-label="Return to Chapter Landing Page"
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" className="header-back-arrow" aria-hidden="true">
+              <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
+            </svg>
+            <span className="landing-btn-text">Landing Page</span>
+          </button>
+
           <button
             type="button"
             className="header-icon-btn notif-btn"

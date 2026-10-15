@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
+import LandingPage from './components/LandingPage';
 import TopHeader from './components/TopHeader';
 import Sidebar from './components/Sidebar';
 import BookList from './components/BookList';
@@ -17,7 +18,50 @@ function App() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 
+  // Landing page vs Library dashboard view state
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#/library') {
+      return 'library';
+    }
+    return 'landing';
+  });
+
   const isInitialMount = useRef(true);
+
+  // Sync hash changes with currentView for browser forward/back buttons
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#/library') {
+        setCurrentView('library');
+      } else if (
+        window.location.hash === '#/' ||
+        window.location.hash === '' ||
+        !window.location.hash.startsWith('#/library')
+      ) {
+        setCurrentView('landing');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // View navigation handlers
+  const handleOpenLibrary = () => {
+    setCurrentView('library');
+    if (typeof window !== 'undefined') {
+      window.location.hash = '#/library';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleGoToLanding = () => {
+    setCurrentView('landing');
+    if (typeof window !== 'undefined') {
+      window.location.hash = '#/';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   // Persist collection on changes (add, status change, delete)
   useEffect(() => {
@@ -67,8 +111,12 @@ function App() {
       setIsHelpModalOpen(true);
       return;
     }
+    if (navId === 'Home') {
+      handleGoToLanding();
+      return;
+    }
     setActiveNav(navId);
-    if (navId === 'Home' || navId === 'Library') {
+    if (navId === 'Library') {
       setStatusFilter('ALL');
     } else if (navId === 'Reading') {
       setStatusFilter(BOOK_STATUS.READING);
@@ -127,6 +175,10 @@ function App() {
     };
   }, [books]);
 
+  if (currentView === 'landing') {
+    return <LandingPage onOpenLibrary={handleOpenLibrary} />;
+  }
+
   return (
     <div className="chapter-dashboard-shell">
       {/* Top Navigation Header */}
@@ -138,6 +190,7 @@ function App() {
         onStatusFilterChange={handleStatusFilterChange}
         stats={stats}
         totalBooksCount={books.length}
+        onGoToLanding={handleGoToLanding}
       />
 
       {/* Main Body: Fixed-width Sidebar + Pale Mint Library Content */}
