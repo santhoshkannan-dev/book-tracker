@@ -2,7 +2,7 @@
 
 An editorial reading-journal web application designed for personal book curation, reading status tracking, and distraction-free library management. Built with **React 19**, **Vite 8**, and **Vanilla CSS**.
 
-> **Live Demo:** [https://your-deployment-url.vercel.app](https://your-deployment-url.vercel.app) *(Replace with your deployed URL)*  
+> **Live Demo:** [[https://your-deployment-url.vercel.app](https://book-tracker-five-silk.vercel.app/)]([https://your-deployment-url.vercel.app](https://book-tracker-five-silk.vercel.app/)) *(Replace with your deployed URL)*  
 > **Repository:** [https://github.com/santhoshkannan-dev/book-tracker](https://github.com/santhoshkannan-dev/book-tracker)
 
 ---
