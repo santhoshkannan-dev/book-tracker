@@ -121,7 +121,16 @@ export default function BookCard({ book, onStatusChange, onDeleteBook }) {
               <span>Delete</span>
             </button>
           ) : (
-            <div className="delete-confirm-box" role="alert">
+            <div
+              className="delete-confirm-box"
+              role="alert"
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  e.stopPropagation();
+                  setIsConfirmingDelete(false);
+                }
+              }}
+            >
               <span className="confirm-text">Remove book?</span>
               <div className="confirm-buttons">
                 <button
@@ -129,6 +138,7 @@ export default function BookCard({ book, onStatusChange, onDeleteBook }) {
                   className="btn-confirm-delete"
                   onClick={handleConfirmDelete}
                   aria-label={`Confirm deletion of ${book.title}`}
+                  autoFocus
                 >
                   Confirm
                 </button>
