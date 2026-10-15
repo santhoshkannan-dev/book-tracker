@@ -1,67 +1,80 @@
 # Chapter — Personal Book Tracker
 
-An editorial reading-journal web application designed for personal book curation, rhythm tracking, and distraction-free library management. Built with **React 19**, **Vite 8**, and **Vanilla CSS**.
+An editorial reading-journal web application designed for personal book curation, reading status tracking, and distraction-free library management. Built with **React 19**, **Vite 8**, and **Vanilla CSS**.
 
-> **Live Demo**: [https://your-chapter-deployment.vercel.app](https://your-chapter-deployment.vercel.app) *(or your deployed live URL)*
+> **Live Demo:** [https://your-deployment-url.vercel.app](https://your-deployment-url.vercel.app) *(Replace with your deployed URL)*  
+> **Repository:** [https://github.com/santhoshkannan-dev/book-tracker](https://github.com/santhoshkannan-dev/book-tracker)
 
 ---
 
 ## Overview
 
-**Chapter** provides a serene, tactile space to log titles in your hands, organize upcoming reads, and track reading milestones. Designed with an editorial aesthetic inspired by physical clothbound journals, it balances visual elegance with accessible, responsive software engineering.
+**Chapter** provides a focused, tactile interface to catalog books in progress, queue upcoming reads, and track reading milestones. The application is structured as a client-side single-page application (SPA) featuring an editorial landing page that transitions into a personal library dashboard. All data is persisted directly to the browser via `localStorage`, requiring no accounts, backend services, or third-party trackers.
 
 ---
 
-## Features
+## Implemented Features
 
-- **Editorial Landing Page**: Welcoming editorial presentation with floating book covers, staggered entrance animations, value propositions, key features breakdown, interactive preview, and responsive navigation.
-- **Custom Book Logo**: Distinctive Chapter emblem integrated in the navigation bar, dashboard header, and footer.
-- **Book Cataloguing**: Add books with Title, Author, Status (**To read**, **Reading**, or **Finished**), and optional Book Cover Image URL.
-- **Book Cover Support & Fallbacks**: Renders direct book-cover URLs cleanly, falling back to a custom CSS clothbound book jacket with algorithmic color palettes if a cover URL is omitted or fails to load.
-- **Inline Validation**: Displays clear, accessible inline validation messages (`Please enter a title`, `Please enter an author`) if inputs are missing or composed solely of whitespace. Valid input fields are preserved if submission fails.
-- **Chronological Sorting**: New books are prepended automatically to the top of the collection (newest first) with relative creation dates.
-- **Reactive Search**: Case-insensitive instant search across both title and author. Trims leading/trailing whitespace and isolates filtered search views so saved storage is never altered.
-- **Status Management**: Update any book's status on its card with an accessible `<select>` dropdown. Stats and storage update immediately while preserving original book metadata (ID, title, author, creation timestamp).
-- **Persistent Local Storage**: Safely synchronizes the entire collection to browser `localStorage` under the key `chapter-books`. Uses lazy state initialization to prevent accidental empty-array overwrites and sanitizes corrupt or malformed JSON gracefully.
-- **Reading Statistics**: Live progress bar displaying total books and category counts for *All Books*, *To Read*, *Reading*, and *Finished*.
-- **Delete with Confirmation**: Tactile inline confirmation (`Remove book? [Confirm] [Cancel]`) prevents accidental deletions and supports keyboard `Escape` cancellation.
-- **Graceful Empty States**:
-  - *Empty Library*: Peaceful book illustration with a direct call to action to log your first book.
-  - *Empty Search*: Dedicated message indicating no matching titles with a single-click reset button.
-- **Responsive & Accessible Design**:
-  - Fluid mobile-first layout tested from 1440px desktop down to 320px compact screens with zero horizontal overflow.
-  - Minimum 40px touch targets for mobile inputs, selects, and action buttons.
-  - Semantic HTML5 structure, ARIA alert roles, visible keyboard focus rings (`:focus-visible`), and full `@media (prefers-reduced-motion: reduce)` support.
+### 1. Landing Page & Navigation
+- **Editorial Presentation:** Welcoming hero section with staggered entrance animations, typography inspired by book publishers, and a three-cover floating visual stage featuring real cover artwork.
+- **Custom Brand Identity:** Custom emblem icon (`/chapter.avif`) in the top navigation bar, dashboard header, and footer.
+- **Zero-Dependency View Routing:** Hash-based view switching (`#/` for the landing page, `#/library` for the dashboard) supporting browser back/forward buttons and direct bookmarking without external routing libraries.
+- **Responsive Navigation:** Desktop navigation links (*The Concept*, *Features*, *Preview*) and a collapsible mobile dropdown menu.
+- **Footer with Creator Links:** Multi-column footer including navigation links, developer details, portfolio link ([santhoshkannan.codes](https://www.santhoshkannan.codes)), LinkedIn ([santhosh-kannan-r](https://www.linkedin.com/in/santhosh-kannan-r/)), and GitHub ([santhoshkannan-dev](https://github.com/santhoshkannan-dev)).
+
+### 2. Library Dashboard & Cataloguing
+- **Book Addition Form:** Form accessible via modal or grid tile supporting **Title**, **Author**, **Reading Status** (*To read*, *Reading*, *Finished*), and an optional **Cover Image URL**.
+- **Inline Validation:** Strict validation requiring non-empty, trimmed title and author values. Submitting invalid inputs displays clear inline messages (`Please enter a title`, `Please enter an author`) without clearing validly entered data.
+- **Chronological Sorting:** New books are prepended automatically to the top of the collection (newest first).
+- **Book Cover Display & Graceful Fallbacks:** Valid HTTP/HTTPS image URLs render within the card frame (`object-fit: cover`). If a cover URL is omitted or fails to load (404/network error), the card automatically falls back to an algorithmic, CSS-rendered clothbound book jacket displaying the title, author, and book ornament with zero broken-image icons.
+
+### 3. Search & Status Management
+- **Reactive Instant Search:** Case-insensitive search across both title and author with leading and trailing whitespace trimming. Search results filter in real time without altering the saved collection.
+- **Status Updates:** Update any book's reading status via an accessible dropdown selector directly on the card. Statistics and storage synchronize immediately while preserving original IDs and creation timestamps.
+- **Statistics Calculation:** Live reading statistics (*Total Books*, *To Read*, *Reading*, *Finished*) calculated from the complete collection rather than filtered search views.
+- **Delete with Confirmation:** Two-step confirmation popover (`Delete? Yes / No`) to prevent accidental deletions, supporting `Escape` key cancellation.
+- **State Feedback:** Distinct empty-library and no-search-results states with a one-click filter reset.
+
+### 4. Persistence & Reliability
+- **Browser LocalStorage:** Synchronizes all operations (adds, updates, deletions) under the single key `chapter-books`.
+- **Race Condition Prevention:** Uses synchronous lazy state initialization (`useState(() => loadBooksFromStorage())`) to prevent initial empty-array state from overwriting existing stored data.
+- **Data Validation & Sanitization:** Filters and sanitizes loaded items, discarding malformed JSON or invalid schema entries while falling back to initial sample titles on first launch.
 
 ---
 
 ## Design System
 
-The application adheres to an intentional, restrained reading-journal palette:
-- **Warm Ivory (`#F6F3EC`)**: Base page background.
-- **Forest Green (`#254B3B`)**: Primary buttons, brand marks, and active accents.
-- **Charcoal (`#252822`)**: Headings, body text, and structural contrast.
-- **Muted Sage (`#E5EBE1` / `#D3DDD0`)**: Subtle borders, dividers, and card surfaces.
-- **Restrained Gold (`#C6A56B`)**: Accent badges, eyebrow labels, and highlight markers.
-- **Typography**: Editorial serif [Newsreader](https://fonts.google.com/specimen/Newsreader) for headings paired with crisp sans-serif [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) for body readability.
+The application uses an intentional, high-contrast reading-journal palette defined with CSS Custom Properties:
+
+| Token | Hex | Usage |
+|---|---|---|
+| Warm Ivory | `#F6F3EC` | Landing page background and primary surfaces |
+| Forest Green | `#254B3B` | Primary call-to-action buttons, brand accents, active states |
+| Charcoal | `#252822` | Primary typography and high-contrast structural text |
+| Muted Sage | `#E5EBE1` | Subtle borders, badges, card surfaces, and dividers |
+| Restrained Gold | `#C6A56B` | Accent highlights, eyebrow badges, and tag elements |
+
+**Typography:**
+- Headings: [Newsreader](https://fonts.google.com/specimen/Newsreader) (editorial serif).
+- Body & Interface: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) (clean geometric sans-serif).
 
 ---
 
-## Tech Stack
+## Technology Stack
 
-- **Framework**: [React 19](https://react.dev/) (Functional components, hooks: `useState`, `useMemo`, `useEffect`, `useRef`)
-- **Build Tool**: [Vite 8](https://vite.dev/)
-- **Styling**: Vanilla CSS with CSS Custom Properties (zero external UI library overhead)
-- **Linting**: ESLint 10 (Flat Config with React Hooks & React Refresh plugins)
-- **Storage**: Browser `localStorage` API with defensive validation and error handling
+- **Framework:** [React](https://react.dev/) `^19.2.8` (Functional components, hooks: `useState`, `useMemo`, `useEffect`, `useRef`)
+- **Build Tool:** [Vite](https://vite.dev/) `^8.3.0` (Client build with `@vitejs/plugin-react` `^6.1.1`)
+- **Styling:** Vanilla CSS with custom properties and CSS Grid/Flexbox (zero runtime CSS libraries)
+- **Code Quality:** [ESLint](https://eslint.org/) `^10.10.0` (Flat Config with `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh`)
+- **Persistence:** Browser `localStorage` API
 
 ---
 
 ## Local Setup & Development
 
 ### Prerequisites
-- Node.js (v18.0.0 or higher recommended)
-- npm (v9.0.0 or higher)
+- **Node.js:** v18.0.0 or higher (v20+ recommended)
+- **npm:** v9.0.0 or higher
 
 ### Installation
 
@@ -76,59 +89,85 @@ The application adheres to an intentional, restrained reading-journal palette:
    npm install
    ```
 
-3. Start the Vite local development server:
+3. Start the local development server:
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+4. Open the development URL in your browser:
+   ```text
+   http://localhost:5173
+   ```
 
 ---
 
-## Build & Quality Checks
+## Available Scripts
 
-- **Run ESLint**:
-  ```bash
-  npm run lint
-  ```
-- **Build for Production**:
-  ```bash
-  npm run build
-  ```
-- **Preview Production Build**:
-  ```bash
-  npm run preview
-  ```
+In the project root, you can execute:
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Starts Vite development server with Hot Module Replacement (HMR). |
+| `npm run build` | Compiles and optimizes assets into the `dist/` directory for production. |
+| `npm run lint` | Runs ESLint across all `.js`, `.jsx` files to check code quality and React hook rules. |
+| `npm run preview` | Serves the production build locally at `http://localhost:4173` to test the output bundle. |
 
 ---
 
 ## Deployment Instructions
 
 ### Deploying to Vercel (Recommended)
-1. Push your repository to GitHub.
-2. Sign in to [Vercel](https://vercel.com) and click **Add New Project**.
+
+1. Push the latest code to GitHub:
+   ```bash
+   git push origin main
+   ```
+2. Log in to [Vercel](https://vercel.com) and click **Add New Project**.
 3. Import the `book-tracker` repository.
-4. Keep the default settings:
-   - **Framework Preset**: Vite
-   - **Build Command**: `vite build` or `npm run build`
-   - **Output Directory**: `dist`
-5. Click **Deploy**.
+4. Keep the default configuration:
+   - **Framework Preset:** Vite
+   - **Root Directory:** `./`
+   - **Build Command:** `vite build` (or `npm run build`)
+   - **Output Directory:** `dist`
+5. Click **Deploy**. Vercel will build and assign a production URL.
+6. Copy the live URL and update the placeholder at the top of this `README.md`.
 
 ### Deploying to GitHub Pages
-1. Install the `gh-pages` package:
+
+If deploying to GitHub Pages instead of Vercel, adjust for repository sub-path hosting:
+
+1. In `vite.config.js`, set the base path to your repository name:
+   ```javascript
+   // vite.config.js
+   import { defineConfig } from 'vite'
+   import react from '@vitejs/plugin-react'
+
+   export default defineConfig({
+     plugins: [react()],
+     base: '/book-tracker/',
+   })
+   ```
+2. Install the `gh-pages` deployment tool:
    ```bash
    npm install --save-dev gh-pages
    ```
-2. In `vite.config.js`, set `base: '/book-tracker/'`.
-3. In `package.json`, add deployment scripts:
+3. Add the deploy scripts to `package.json`:
    ```json
    "scripts": {
      "predeploy": "npm run build",
      "deploy": "gh-pages -d dist"
    }
    ```
-4. Run:
+4. Run deployment:
    ```bash
    npm run deploy
    ```
-5. In your GitHub repository settings, go to **Pages** and ensure the source is set to the `gh-pages` branch.
+5. In GitHub repository settings under **Pages**, ensure the branch source is set to `gh-pages`. Because the application uses hash-based routing (`#/` and `#/library`), direct page refreshes work reliably on GitHub Pages without server-side redirect rules.
+
+---
+
+## Quality Verification
+
+- **Linting:** Verified clean via `npm run lint` with 0 warnings and 0 errors.
+- **Production Build:** Verified clean via `npm run build` generating optimized production assets.
+- **Browser Testing:** Verified manually in browser across desktop (1440px), tablet (768px), and mobile (390px, 320px) viewports with zero horizontal overflow.

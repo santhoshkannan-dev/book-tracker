@@ -51,6 +51,14 @@ This document records the five most pivotal prompts used during the development 
 
 ---
 
+## Final Validation and Reflection
+
+The development process used iterative prompting, manual testing, and targeted corrections rather than generating the entire application in one step.
+
+Before submission, the application was checked against the assessment requirements, including form validation, newest-first ordering, case-insensitive search, status updates, and localStorage persistence.
+
+Any checks not yet completed should be identified and resolved before the final submission.
+
 ## Real AI Mistake Encountered & Resolved
 
 ### The Mistake / Incorrect Assumption
