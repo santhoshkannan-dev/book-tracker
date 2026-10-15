@@ -14,6 +14,23 @@ export function isValidBook(item) {
 }
 
 /**
+ * Validates whether an optional cover URL uses http or https.
+ * @param {unknown} url
+ * @returns {boolean}
+ */
+export function isValidCoverUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+  if (!trimmed) return false;
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Sanitizes book fields to prevent corrupt values from propagating into state.
  * @param {any} item
  * @returns {object}
@@ -24,13 +41,19 @@ export function sanitizeBook(item) {
     ? item.createdAt
     : Date.now();
 
-  return {
+  const sanitizedBook = {
     id: String(item.id),
     title: String(item.title).trim(),
     author: String(item.author).trim(),
     status: validStatus,
     createdAt: validCreatedAt,
   };
+
+  if (item.coverUrl && isValidCoverUrl(item.coverUrl)) {
+    sanitizedBook.coverUrl = item.coverUrl.trim();
+  }
+
+  return sanitizedBook;
 }
 
 /**

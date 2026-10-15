@@ -4,18 +4,37 @@ import { BOOK_STATUS, STATUS_OPTIONS } from '../constants/books';
 export default function BookForm({ onAddBook, isModalMode = false }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [coverUrl, setCoverUrl] = useState('');
   const [status, setStatus] = useState(BOOK_STATUS.TO_READ);
-  const [touched, setTouched] = useState({ title: false, author: false });
-  const [errors, setErrors] = useState({ title: '', author: '' });
+  const [touched, setTouched] = useState({ title: false, author: false, coverUrl: false });
+  const [errors, setErrors] = useState({ title: '', author: '', coverUrl: '' });
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const validate = (currentTitle, currentAuthor) => {
-    const errs = { title: '', author: '' };
+  // Validate cover URL uses HTTP/HTTPS and is well-formed
+  const validateCoverUrl = (url) => {
+    if (!url || !url.trim()) return ''; // Optional
+    const trimmed = url.trim();
+    try {
+      const parsed = new URL(trimmed);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        return 'Please enter a valid HTTP or HTTPS image URL.';
+      }
+      return '';
+    } catch {
+      return 'Please enter a valid image URL.';
+    }
+  };
+
+  const validate = (currentTitle, currentAuthor, currentCoverUrl) => {
+    const errs = { title: '', author: '', coverUrl: '' };
     if (!currentTitle.trim()) {
       errs.title = 'Please enter a title';
     }
     if (!currentAuthor.trim()) {
       errs.author = 'Please enter an author';
+    }
+    if (currentCoverUrl && currentCoverUrl.trim()) {
+      errs.coverUrl = validateCoverUrl(currentCoverUrl);
     }
     return errs;
   };
@@ -44,19 +63,31 @@ export default function BookForm({ onAddBook, isModalMode = false }) {
     if (isSuccess) setIsSuccess(false);
   };
 
+  const handleCoverUrlChange = (e) => {
+    const val = e.target.value;
+    setCoverUrl(val);
+    if (touched.coverUrl) {
+      setErrors((prev) => ({
+        ...prev,
+        coverUrl: validateCoverUrl(val),
+      }));
+    }
+    if (isSuccess) setIsSuccess(false);
+  };
+
   const handleBlur = (field) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
-    const errs = validate(title, author);
+    const errs = validate(title, author, coverUrl);
     setErrors(errs);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTouched({ title: true, author: true });
-    const errs = validate(title, author);
+    setTouched({ title: true, author: true, coverUrl: true });
+    const errs = validate(title, author, coverUrl);
     setErrors(errs);
 
-    if (errs.title || errs.author) {
+    if (errs.title || errs.author || errs.coverUrl) {
       return;
     }
 
@@ -64,20 +95,22 @@ export default function BookForm({ onAddBook, isModalMode = false }) {
       title: title.trim(),
       author: author.trim(),
       status,
+      coverUrl: coverUrl.trim() ? coverUrl.trim() : undefined,
     });
 
     // Reset form
     setTitle('');
     setAuthor('');
+    setCoverUrl('');
     setStatus(BOOK_STATUS.TO_READ);
-    setTouched({ title: false, author: false });
-    setErrors({ title: '', author: '' });
+    setTouched({ title: false, author: false, coverUrl: false });
+    setErrors({ title: '', author: '', coverUrl: '' });
     setIsSuccess(true);
     setTimeout(() => setIsSuccess(false), 3500);
   };
 
   return (
-    <section className={`form-section ${isModalMode ? 'in-modal' : ''}`} aria-labelledby={!isModalMode ? "form-heading" : undefined}>
+    <section className={`form-section ${isModalMode ? 'in-modal' : ''}`} aria-labelledby={!isModalMode ? 'form-heading' : undefined}>
       <div className={`form-card ${isModalMode ? 'modal-card' : ''}`}>
         {!isModalMode && (
           <div className="form-card-header">
@@ -163,6 +196,40 @@ export default function BookForm({ onAddBook, isModalMode = false }) {
                   </svg>
                   {errors.author}
                 </p>
+              )}
+            </div>
+
+            {/* Optional Cover Image URL Field */}
+            <div className={`form-group ${touched.coverUrl && errors.coverUrl ? 'has-error' : ''}`}>
+              <label htmlFor="book-cover-url" className="form-label">
+                Book Cover Image URL <span className="optional-tag">(Optional)</span>
+              </label>
+              <div className="input-wrapper">
+                <input
+                  id="book-cover-url"
+                  type="url"
+                  className="form-input"
+                  placeholder="e.g. https://example.com/cover.jpg"
+                  value={coverUrl}
+                  onChange={handleCoverUrlChange}
+                  onBlur={() => handleBlur('coverUrl')}
+                  aria-invalid={touched.coverUrl && !!errors.coverUrl}
+                  aria-describedby={touched.coverUrl && errors.coverUrl ? 'book-cover-url-error' : 'book-cover-url-hint'}
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+              </div>
+              {touched.coverUrl && errors.coverUrl ? (
+                <p id="book-cover-url-error" className="error-message" role="alert">
+                  <svg className="error-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4.5zm0 7a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75z" />
+                  </svg>
+                  {errors.coverUrl}
+                </p>
+              ) : (
+                <span id="book-cover-url-hint" className="field-hint">
+                  Direct link to image (.jpg, .png, .webp)
+                </span>
               )}
             </div>
 

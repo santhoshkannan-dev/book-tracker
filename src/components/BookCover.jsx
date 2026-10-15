@@ -1,4 +1,9 @@
-export default function BookCover({ title, author, coverUrl }) {
+import { useState } from 'react';
+
+export default function BookCover({ title = 'Book', author = 'Unknown', coverUrl }) {
+  // Track which URL has failed to avoid cascading effect renders
+  const [failedUrl, setFailedUrl] = useState(null);
+
   // Generate a consistent cover accent based on the title string
   const getCoverHue = (str) => {
     let hash = 0;
@@ -16,24 +21,29 @@ export default function BookCover({ title, author, coverUrl }) {
     return palettes[index];
   };
 
-  const palette = getCoverHue(title || 'Book');
+  const palette = getCoverHue(title);
+  // Show image if coverUrl is provided and has not failed loading
+  const showImage = Boolean(coverUrl && failedUrl !== coverUrl);
 
   return (
-    <div className="book-cover-container" aria-hidden="true">
-      {coverUrl ? (
+    <div className="book-cover-container">
+      {showImage ? (
         <img
+          key={coverUrl}
           src={coverUrl}
-          alt={`Cover of ${title}`}
+          alt={`Book cover for ${title} by ${author}`}
           className="book-cover-image"
           loading="lazy"
-          onError={(e) => {
-            // Fallback gracefully on image load error
-            e.currentTarget.style.display = 'none';
+          onError={() => {
+            // Unmounts the img and switches immediately to CSS fallback
+            // Guaranteed: no infinite loop, no broken image icon displayed
+            setFailedUrl(coverUrl);
           }}
         />
       ) : (
         <div
           className="book-cover-art"
+          aria-hidden="true"
           style={{
             backgroundColor: palette.bg,
             color: palette.text,

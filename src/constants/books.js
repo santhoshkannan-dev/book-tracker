@@ -18,6 +18,7 @@ export const INITIAL_SAMPLE_BOOKS = [
     title: 'The Creative Act: A Way of Being',
     author: 'Rick Rubin',
     status: BOOK_STATUS.READING,
+    coverUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=600',
     createdAt: Date.now() - 1000 * 60 * 60 * 2, // 2 hours ago
   },
   {

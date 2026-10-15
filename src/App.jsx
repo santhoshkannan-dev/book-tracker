@@ -33,13 +33,14 @@ function App() {
   }, [books]);
 
   // Handle adding a book
-  const handleAddBook = ({ title, author, status }) => {
+  const handleAddBook = ({ title, author, status, coverUrl }) => {
     const newBook = {
       id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `book-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       title: title.trim(),
       author: author.trim(),
       status: status || BOOK_STATUS.TO_READ,
       createdAt: Date.now(),
+      ...(coverUrl && coverUrl.trim() ? { coverUrl: coverUrl.trim() } : {}),
     };
 
     // Prepend to display newest first
