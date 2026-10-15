@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import Header from './components/Header';
-import StatsCards from './components/StatsCards';
-import BookForm from './components/BookForm';
+import TopHeader from './components/TopHeader';
+import Sidebar from './components/Sidebar';
 import BookList from './components/BookList';
+import AddBookModal from './components/AddBookModal';
+import HelpModal from './components/HelpModal';
 import { BOOK_STATUS, STORAGE_KEY } from './constants/books';
 import { loadBooksFromStorage, saveBooksToStorage } from './utils/storage';
 import './App.css';
@@ -11,6 +12,11 @@ function App() {
   // Safe synchronous initialization from localStorage prevents empty overwrites
   const [books, setBooks] = useState(() => loadBooksFromStorage());
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [activeNav, setActiveNav] = useState('Library');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+
   const isInitialMount = useRef(true);
 
   // Persist collection on changes (add, status change, delete)
@@ -54,20 +60,63 @@ function App() {
     setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
   };
 
-  // Compute filtered books (case-insensitive, trimming whitespace)
+  // Handle sidebar navigation selection
+  const handleSelectNav = (navId) => {
+    if (navId === 'Help') {
+      setIsHelpModalOpen(true);
+      return;
+    }
+    setActiveNav(navId);
+    if (navId === 'Home' || navId === 'Library') {
+      setStatusFilter('ALL');
+    } else if (navId === 'Reading') {
+      setStatusFilter(BOOK_STATUS.READING);
+    } else if (navId === 'Finished') {
+      setStatusFilter(BOOK_STATUS.FINISHED);
+    }
+  };
+
+  // Handle filter dropdown change from header
+  const handleStatusFilterChange = (newFilter) => {
+    setStatusFilter(newFilter);
+    if (newFilter === BOOK_STATUS.READING) {
+      setActiveNav('Reading');
+    } else if (newFilter === BOOK_STATUS.FINISHED) {
+      setActiveNav('Finished');
+    } else {
+      setActiveNav('Library');
+    }
+  };
+
+  // Reset all filters and search query
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setStatusFilter('ALL');
+    setActiveNav('Library');
+  };
+
+  // Compute filtered books (combining search query and status filter)
   const filteredBooks = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    if (!query) {
-      return books;
-    }
-    return books.filter((book) => {
-      const matchTitle = book.title.toLowerCase().includes(query);
-      const matchAuthor = book.author.toLowerCase().includes(query);
-      return matchTitle || matchAuthor;
-    });
-  }, [books, searchQuery]);
 
-  // Compute live reading statistics
+    return books.filter((book) => {
+      // Status filter
+      if (statusFilter !== 'ALL' && book.status !== statusFilter) {
+        return false;
+      }
+      // Search query filter (title or author)
+      if (query) {
+        const matchTitle = book.title.toLowerCase().includes(query);
+        const matchAuthor = book.author.toLowerCase().includes(query);
+        if (!matchTitle && !matchAuthor) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [books, searchQuery, statusFilter]);
+
+  // Compute live reading statistics across the entire saved collection
   const stats = useMemo(() => {
     return {
       total: books.length,
@@ -77,48 +126,54 @@ function App() {
     };
   }, [books]);
 
-  // Focus helper for CTA buttons
-  const handleFocusAddForm = () => {
-    const titleInput = document.getElementById('book-title');
-    if (titleInput) {
-      titleInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      titleInput.focus();
-    }
-  };
-
   return (
-    <div className="chapter-app-shell">
-      <div className="chapter-container">
-        <Header />
+    <div className="chapter-dashboard-shell">
+      {/* Top Navigation Header */}
+      <TopHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onClearSearch={() => setSearchQuery('')}
+        statusFilter={statusFilter}
+        onStatusFilterChange={handleStatusFilterChange}
+        stats={stats}
+        totalBooksCount={books.length}
+      />
 
-        <main id="main-content" className="chapter-main-flow">
-          <StatsCards stats={stats} />
+      {/* Main Body: Fixed-width Sidebar + Pale Mint Library Content */}
+      <div className="dashboard-body-layout">
+        <Sidebar
+          activeNav={activeNav}
+          onSelectNav={handleSelectNav}
+          stats={stats}
+        />
 
-          <BookForm onAddBook={handleAddBook} />
-
+        <main id="main-content" className="dashboard-main-content">
           <BookList
             books={filteredBooks}
             totalBooksCount={books.length}
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            statusFilter={statusFilter}
+            activeNav={activeNav}
             onClearSearch={() => setSearchQuery('')}
+            onResetFilters={handleResetFilters}
             onStatusChange={handleStatusChange}
             onDeleteBook={handleDeleteBook}
-            onFocusAddForm={handleFocusAddForm}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
           />
         </main>
-
-        <footer className="chapter-footer">
-          <div className="footer-inner">
-            <p className="footer-copyright">
-              Chapter &mdash; Personal Book Tracker. Crafted with care and literary calm.
-            </p>
-            <p className="footer-note">
-              Designed for mindful reading rhythms.
-            </p>
-          </div>
-        </footer>
       </div>
+
+      {/* Modals */}
+      <AddBookModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAddBook={handleAddBook}
+      />
+
+      <HelpModal
+        isOpen={isHelpModalOpen}
+        onClose={() => setIsHelpModalOpen(false)}
+      />
     </div>
   );
 }

@@ -1,25 +1,44 @@
 :root {
-  /* Color Palette */
-  --color-ivory: #F6F3EC;
-  --color-forest: #254B3B;
-  --color-forest-hover: #1b372b;
-  --color-forest-subtle: #EBF2EB;
-  --color-charcoal: #252822;
-  --color-charcoal-muted: #5E6359;
-  --color-charcoal-light: #80867B;
-  --color-sage: #E5EBE1;
-  --color-sage-border: #D3DDD0;
-  --color-gold: #C6A56B;
-  --color-gold-subtle: #FAF5EB;
-  --color-card-bg: #FFFFFF;
-  --color-card-hover: #FCFBF7;
+  /* Modern Book Library Dashboard Palette */
+  --bg-app: #F2F7F2;          /* Pale mint-green main content background */
+  --bg-sidebar: #FFFFFF;      /* White sidebar */
+  --bg-header: #FFFFFF;       /* White header */
+  --bg-card: #FFFFFF;         /* White card background */
+  --bg-cover: #E5EEE5;        /* Soft pale green cover container */
+  --bg-input: #F4F8F4;        /* Soft pill search background */
+  --bg-input-hover: #EBF1EB;
+
+  --color-primary: #17651D;   /* Forest green accent */
+  --color-primary-hover: #125217;
+  --color-primary-subtle: #EBF3EB;
+  --color-primary-border: #C8DEC6;
+
+  --color-text-main: #171A17; /* Near-black primary text */
+  --color-text-muted: #747A76;/* Muted gray secondary text */
+  --color-text-light: #949A96;
+  --color-border: #E1E5E1;    /* Subtle light gray border */
+  --color-border-subtle: #EDF1ED;
+
+  /* Status Colors */
+  --status-to-read-bg: #FAF3E6;
+  --status-to-read-text: #855F10;
+  --status-to-read-border: #E8D8BA;
+
+  --status-reading-bg: #E8F4E8;
+  --status-reading-text: #17651D;
+  --status-reading-border: #BCD9BC;
+
+  --status-finished-bg: #EBF0EB;
+  --status-finished-text: #2D3A2F;
+  --status-finished-border: #D1DDD1;
+
   --color-error: #A83232;
   --color-error-bg: #FDF3F3;
   --color-error-border: #F0C4C4;
 
   /* Typography */
-  --font-serif: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Newsreader', Georgia, serif;
 
   /* Spacing */
   --space-2xs: 4px;
@@ -29,22 +48,25 @@
   --space-lg: 24px;
   --space-xl: 32px;
   --space-2xl: 48px;
-  --space-3xl: 64px;
 
   /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-pill: 9999px;
 
-  /* Shadows */
-  --shadow-subtle: 0 1px 3px rgba(37, 40, 34, 0.05);
-  --shadow-card: 0 2px 8px -2px rgba(37, 40, 34, 0.06), 0 1px 3px rgba(37, 40, 34, 0.04);
-  --shadow-card-hover: 0 8px 20px -4px rgba(37, 40, 34, 0.08), 0 2px 6px rgba(37, 40, 34, 0.04);
-  --shadow-modal: 0 20px 40px -8px rgba(37, 40, 34, 0.25);
+  /* Layout dimensions */
+  --header-height: 88px;
+  --sidebar-width: 210px;
+  --max-content-width: 1440px;
 
-  /* Layout */
-  --max-width: 1120px;
+  /* Shadows */
+  --shadow-subtle: 0 1px 3px rgba(23, 26, 23, 0.04);
+  --shadow-card: 0 2px 6px -1px rgba(23, 26, 23, 0.05), 0 1px 3px rgba(23, 26, 23, 0.03);
+  --shadow-card-hover: 0 8px 18px -4px rgba(23, 26, 23, 0.08), 0 2px 6px rgba(23, 26, 23, 0.04);
+  --shadow-modal: 0 20px 45px -10px rgba(23, 26, 23, 0.25);
+  --shadow-popover: 0 10px 25px -5px rgba(23, 26, 23, 0.12), 0 4px 10px -2px rgba(23, 26, 23, 0.06);
 }
 
 *, *::before, *::after {
@@ -53,8 +75,8 @@
 
 html {
   font-family: var(--font-sans);
-  background-color: var(--color-ivory);
-  color: var(--color-charcoal);
+  background-color: var(--bg-app);
+  color: var(--color-text-main);
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -65,8 +87,8 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: var(--color-ivory);
-  color: var(--color-charcoal);
+  background-color: var(--bg-app);
+  color: var(--color-text-main);
   overflow-x: hidden;
 }
 
@@ -76,22 +98,16 @@ body {
   flex-direction: column;
 }
 
-/* Typography Defaults */
+/* Typography defaults */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  color: var(--color-charcoal);
-  font-weight: 500;
+  color: var(--color-text-main);
+  font-weight: 600;
   margin: 0;
   line-height: 1.25;
 }
 
 p {
   margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 button {
@@ -105,16 +121,16 @@ button {
 input, select, textarea {
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: var(--color-charcoal);
+  color: var(--color-text-main);
 }
 
-/* Focus styles for accessible navigation */
+/* Accessible focus visible */
 :focus-visible {
-  outline: 2px solid var(--color-forest);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Screen reader only utility */
+/* Accessibility helper */
 .sr-only {
   position: absolute;
   width: 1px;

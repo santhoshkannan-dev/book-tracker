@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BOOK_STATUS, STATUS_OPTIONS } from '../constants/books';
 
-export default function BookForm({ onAddBook }) {
+export default function BookForm({ onAddBook, isModalMode = false }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [status, setStatus] = useState(BOOK_STATUS.TO_READ);
@@ -77,32 +77,34 @@ export default function BookForm({ onAddBook }) {
   };
 
   return (
-    <section className="form-section" aria-labelledby="form-heading">
-      <div className="form-card">
-        <div className="form-card-header">
-          <div className="form-header-badge">
-            <svg
-              className="form-feather-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M12 20h9" />
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-            </svg>
-            <span>Log a New Title</span>
+    <section className={`form-section ${isModalMode ? 'in-modal' : ''}`} aria-labelledby={!isModalMode ? "form-heading" : undefined}>
+      <div className={`form-card ${isModalMode ? 'modal-card' : ''}`}>
+        {!isModalMode && (
+          <div className="form-card-header">
+            <div className="form-header-badge">
+              <svg
+                className="form-feather-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+              </svg>
+              <span>Log a New Title</span>
+            </div>
+            <h2 id="form-heading" className="form-title">
+              Add to your reading shelf
+            </h2>
+            <p className="form-subtitle">
+              Document what you have begun, what you are planning to read, or what you have completed.
+            </p>
           </div>
-          <h2 id="form-heading" className="form-title">
-            Add to your reading shelf
-          </h2>
-          <p className="form-subtitle">
-            Document what you have begun, what you are planning to read, or what you have completed.
-          </p>
-        </div>
+        )}
 
         <form onSubmit={handleSubmit} noValidate className="book-form">
           <div className="form-grid">
