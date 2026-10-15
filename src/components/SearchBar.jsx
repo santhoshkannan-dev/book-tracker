@@ -26,6 +26,12 @@ export default function SearchBar({ searchQuery, onSearchChange, onClear }) {
           placeholder="Search by title or author..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' && searchQuery) {
+              e.preventDefault();
+              onClear();
+            }
+          }}
           autoComplete="off"
           spellCheck="false"
         />

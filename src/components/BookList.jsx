@@ -113,16 +113,17 @@ export default function BookList({
               <path d="M30 36h12" stroke="var(--color-charcoal-muted)" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </div>
-          <h3 className="empty-state-title">No books match your query</h3>
+          <h3 className="empty-state-title">No books found</h3>
           <p className="empty-state-desc">
-            We couldn&rsquo;t find any titles or authors containing &ldquo;{searchQuery.trim()}&rdquo;. Check for spelling or reset the filter.
+            We couldn&rsquo;t find any titles or authors matching &ldquo;{searchQuery.trim()}&rdquo;. Check your spelling or reset the search.
           </p>
           <button
             type="button"
             className="btn-secondary empty-cta-btn"
             onClick={onClearSearch}
+            aria-label="Reset search filter and show all books"
           >
-            Clear search filter
+            Reset search
           </button>
         </div>
       )}
