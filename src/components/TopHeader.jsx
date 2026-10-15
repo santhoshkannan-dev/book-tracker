@@ -61,8 +61,18 @@ export default function TopHeader({
           aria-label="Return to Chapter Landing Page"
         >
           <div className="header-logo-badge" aria-hidden="true">
+            <img
+              src="/chapter.avif"
+              alt="Chapter"
+              className="header-logo-img"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.style.removeProperty('display');
+              }}
+            />
             <svg
               className="header-logo-icon"
+              style={{ display: 'none' }}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

@@ -4,8 +4,18 @@ export default function Header() {
       <nav className="chapter-nav" aria-label="Main Navigation">
         <div className="chapter-brand">
           <div className="brand-icon-wrapper" aria-hidden="true">
+            <img
+              src="/chapter.avif"
+              alt="Chapter"
+              className="brand-logo-img"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.style.removeProperty('display');
+              }}
+            />
             <svg
               className="brand-icon"
+              style={{ display: 'none' }}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

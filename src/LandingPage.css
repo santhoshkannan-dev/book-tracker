@@ -103,11 +103,20 @@
   justify-content: center;
   box-shadow: 0 2px 5px rgba(37, 75, 59, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .landing-logo-badge svg {
   width: 20px;
   height: 20px;
+}
+
+.landing-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .landing-brand:hover .landing-logo-badge {
