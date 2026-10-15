@@ -217,42 +217,57 @@ export default function LandingPage({ onOpenLibrary }) {
               {/* Decorative Backdrop Glow */}
               <div className="stage-ambient-glow" aria-hidden="true"></div>
 
-              {/* Book 1: Back Left (Tilted -8deg) */}
-              <div className="hero-cover-wrap book-back-left" tabIndex="0" role="img" aria-label="Preview book cover for Klara and the Sun by Kazuo Ishiguro">
-                <div className="editorial-book-jacket cloth-sage">
+              {/* Book 1: Back Left */}
+              <div
+                className="hero-cover-wrap book-back-left"
+                tabIndex="0"
+                role="img"
+                aria-label="Preview book cover for Klara and the Sun by Kazuo Ishiguro"
+              >
+                <div className="editorial-book-jacket">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg"
+                    alt="Klara and the Sun"
+                    className="jacket-cover-image"
+                  />
                   <div className="jacket-spine-crease"></div>
-                  <div className="jacket-content">
-                    <span className="jacket-series">Literary Fiction</span>
-                    <h3 className="jacket-title">Klara and the Sun</h3>
-                    <p className="jacket-author">Kazuo Ishiguro</p>
-                    <div className="jacket-tag to-read-tag">To read</div>
-                  </div>
+                  <div className="jacket-tag to-read-tag">To read</div>
                 </div>
               </div>
 
-              {/* Book 2: Center Front (Tilted +3deg, prominent) */}
-              <div className="hero-cover-wrap book-center-front" tabIndex="0" role="img" aria-label="Preview book cover for Tomorrow, and Tomorrow, and Tomorrow by Gabrielle Zevin">
-                <div className="editorial-book-jacket cloth-forest">
+              {/* Book 2: Center Front */}
+              <div
+                className="hero-cover-wrap book-center-front"
+                tabIndex="0"
+                role="img"
+                aria-label="Preview book cover for Tomorrow, and Tomorrow, and Tomorrow by Gabrielle Zevin"
+              >
+                <div className="editorial-book-jacket">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1636978687i/58784475.jpg"
+                    alt="Tomorrow, and Tomorrow, and Tomorrow"
+                    className="jacket-cover-image"
+                  />
                   <div className="jacket-spine-crease"></div>
-                  <div className="jacket-content">
-                    <span className="jacket-series">Contemporary Classic</span>
-                    <h3 className="jacket-title">Tomorrow, and Tomorrow, and Tomorrow</h3>
-                    <p className="jacket-author">Gabrielle Zevin</p>
-                    <div className="jacket-tag finished-tag">Finished ✓</div>
-                  </div>
+                  <div className="jacket-tag finished-tag">Finished ✓</div>
                 </div>
               </div>
 
-              {/* Book 3: Back Right (Tilted +10deg) */}
-              <div className="hero-cover-wrap book-back-right" tabIndex="0" role="img" aria-label="Preview book cover for The Creative Act: A Way of Being by Rick Rubin">
-                <div className="editorial-book-jacket cloth-gold">
+              {/* Book 3: Back Right */}
+              <div
+                className="hero-cover-wrap book-back-right"
+                tabIndex="0"
+                role="img"
+                aria-label="Preview book cover for The Creative Act: A Way of Being by Rick Rubin"
+              >
+                <div className="editorial-book-jacket">
+                  <img
+                    src="https://m.media-amazon.com/images/I/918EkrTDaRL._AC_UF1000,1000_QL80_.jpg"
+                    alt="The Creative Act"
+                    className="jacket-cover-image"
+                  />
                   <div className="jacket-spine-crease"></div>
-                  <div className="jacket-content">
-                    <span className="jacket-series">Philosophy &amp; Art</span>
-                    <h3 className="jacket-title">The Creative Act: A Way of Being</h3>
-                    <p className="jacket-author">Rick Rubin</p>
-                    <div className="jacket-tag reading-tag">Reading 📖</div>
-                  </div>
+                  <div className="jacket-tag reading-tag">Reading 📖</div>
                 </div>
               </div>
             </div>
@@ -369,9 +384,12 @@ export default function LandingPage({ onOpenLibrary }) {
             {/* Simulated mini cards */}
             <div className="preview-cards-grid">
               <div className="preview-mini-card">
-                <div className="mini-cover mini-cover-1">
-                  <span className="mini-spine"></span>
-                  <span className="mini-title">The Creative Act</span>
+                <div className="mini-cover-thumbnail">
+                  <img
+                    src="https://m.media-amazon.com/images/I/918EkrTDaRL._AC_UF1000,1000_QL80_.jpg"
+                    alt="The Creative Act"
+                    className="preview-mini-cover-img"
+                  />
                 </div>
                 <div className="mini-meta">
                   <span className="mini-book-name">The Creative Act</span>
@@ -381,9 +399,12 @@ export default function LandingPage({ onOpenLibrary }) {
               </div>
 
               <div className="preview-mini-card">
-                <div className="mini-cover mini-cover-2">
-                  <span className="mini-spine"></span>
-                  <span className="mini-title">Tomorrow &amp; Tomorrow</span>
+                <div className="mini-cover-thumbnail">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1636978687i/58784475.jpg"
+                    alt="Tomorrow, and Tomorrow, and Tomorrow"
+                    className="preview-mini-cover-img"
+                  />
                 </div>
                 <div className="mini-meta">
                   <span className="mini-book-name">Tomorrow, and Tomorrow...</span>
@@ -393,9 +414,12 @@ export default function LandingPage({ onOpenLibrary }) {
               </div>
 
               <div className="preview-mini-card">
-                <div className="mini-cover mini-cover-3">
-                  <span className="mini-spine"></span>
-                  <span className="mini-title">Klara and the Sun</span>
+                <div className="mini-cover-thumbnail">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1603206535i/54120408.jpg"
+                    alt="Klara and the Sun"
+                    className="preview-mini-cover-img"
+                  />
                 </div>
                 <div className="mini-meta">
                   <span className="mini-book-name">Klara and the Sun</span>
@@ -434,8 +458,9 @@ export default function LandingPage({ onOpenLibrary }) {
 
       {/* 7. Footer */}
       <footer className="landing-footer">
-        <div className="landing-container footer-flex">
-          <div className="footer-brand-side">
+        <div className="landing-container footer-content-grid">
+          {/* Brand Column */}
+          <div className="footer-col footer-col-brand">
             <div className="landing-brand">
               <div className="landing-logo-badge" aria-hidden="true">
                 <img
@@ -464,24 +489,86 @@ export default function LandingPage({ onOpenLibrary }) {
               <span className="landing-brand-name">Chapter</span>
             </div>
             <p className="footer-tagline">
-              Your personal reading journal. Designed for quiet literary focus and mindful reading habits.
+              Your personal reading journal. Designed for quiet literary focus, mindful reading habits, and private book cataloguing.
             </p>
           </div>
 
-          <div className="footer-links-side">
-            <button
-              type="button"
-              className="footer-link-btn"
-              onClick={onOpenLibrary}
-            >
-              Go to Library
-            </button>
-            <a href="#concept" onClick={(e) => scrollToSection(e, 'concept')}>
-              Concept
-            </a>
-            <a href="#features" onClick={(e) => scrollToSection(e, 'features')}>
-              Features
-            </a>
+          {/* Navigation Column */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">Navigation</h4>
+            <ul className="footer-nav-list">
+              <li>
+                <a href="#concept" onClick={(e) => scrollToSection(e, 'concept')}>
+                  The Concept
+                </a>
+              </li>
+              <li>
+                <a href="#features" onClick={(e) => scrollToSection(e, 'features')}>
+                  Key Features
+                </a>
+              </li>
+              <li>
+                <a href="#preview" onClick={(e) => scrollToSection(e, 'preview')}>
+                  Interactive Preview
+                </a>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="footer-nav-action-btn"
+                  onClick={onOpenLibrary}
+                >
+                  Open My Library &rarr;
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Creator & Links Column */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">Created By</h4>
+            <div className="footer-author-info">
+              <p className="footer-author-name">Santhosh Kannan</p>
+              <p className="footer-author-role">Full-Stack / Frontend Developer</p>
+            </div>
+            <div className="footer-social-links">
+              <a
+                href="https://github.com/santhoshkannan-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label="Santhosh Kannan's GitHub Profile"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="footer-icon">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+                <span>GitHub Profile</span>
+              </a>
+              <a
+                href="https://github.com/santhoshkannan-dev/book-tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label="Chapter Project GitHub Repository"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="footer-icon">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+                <span>Repository</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="footer-bottom-bar">
+          <div className="landing-container footer-bottom-flex">
+            <p className="footer-copyright">
+              &copy; {new Date().getFullYear()} Chapter. Designed &amp; developed by <strong>Santhosh Kannan</strong>.
+            </p>
+            <p className="footer-sub-note">
+              Distraction-free &bull; Local-first storage &bull; Built with React &amp; Vite
+            </p>
           </div>
         </div>
       </footer>

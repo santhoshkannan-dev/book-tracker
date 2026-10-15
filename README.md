@@ -2,6 +2,8 @@
 
 An editorial reading-journal web application designed for personal book curation, rhythm tracking, and distraction-free library management. Built with **React 19**, **Vite 8**, and **Vanilla CSS**.
 
+> **Live Demo**: [https://your-chapter-deployment.vercel.app](https://your-chapter-deployment.vercel.app) *(or your deployed live URL)*
+
 ---
 
 ## Overview
@@ -12,7 +14,10 @@ An editorial reading-journal web application designed for personal book curation
 
 ## Features
 
-- **Book Cataloguing**: Add books with Title, Author, and Status (**To read**, **Reading**, or **Finished**).
+- **Editorial Landing Page**: Welcoming editorial presentation with floating book covers, staggered entrance animations, value propositions, key features breakdown, interactive preview, and responsive navigation.
+- **Custom Book Logo**: Distinctive Chapter emblem integrated in the navigation bar, dashboard header, and footer.
+- **Book Cataloguing**: Add books with Title, Author, Status (**To read**, **Reading**, or **Finished**), and optional Book Cover Image URL.
+- **Book Cover Support & Fallbacks**: Renders direct book-cover URLs cleanly, falling back to a custom CSS clothbound book jacket with algorithmic color palettes if a cover URL is omitted or fails to load.
 - **Inline Validation**: Displays clear, accessible inline validation messages (`Please enter a title`, `Please enter an author`) if inputs are missing or composed solely of whitespace. Valid input fields are preserved if submission fails.
 - **Chronological Sorting**: New books are prepended automatically to the top of the collection (newest first) with relative creation dates.
 - **Reactive Search**: Case-insensitive instant search across both title and author. Trims leading/trailing whitespace and isolates filtered search views so saved storage is never altered.
